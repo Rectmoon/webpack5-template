@@ -1,0 +1,6 @@
+node_modules
+dist
+rainbow
+package-lock.json
+yarn.lock
+sentry.properties
