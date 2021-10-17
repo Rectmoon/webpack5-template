@@ -3,7 +3,6 @@ const os = require('os')
 const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin')
 const LodashWebpackPlugin = require('lodash-webpack-plugin')
 
 const { resolve, getEntries, getHtmlPlugins, assetsPath } = require('./utils')
@@ -27,17 +26,17 @@ const globalCssHandlers = [
 const localCssHandlers = globalCssHandlers.map((handler, i) =>
   i == 1
     ? {
-      loader: 'css-loader',
-      options: {
-        importLoaders: 1,
-        modules: {
-          mode: 'local',
-          localIdentName: isDev
-            ? '[path][name]__[local]'
-            : '[name]--[hash:base64:5]'
+        loader: 'css-loader',
+        options: {
+          importLoaders: 1,
+          modules: {
+            mode: 'local',
+            localIdentName: isDev
+              ? '[path][name]__[local]'
+              : '[name]--[hash:base64:5]'
+          }
         }
       }
-    }
     : handler
 )
 
@@ -233,30 +232,6 @@ module.exports = {
 
     new webpack.ProgressPlugin(),
 
-    new LodashWebpackPlugin(),
-
-    new HtmlWebpackTagsPlugin({
-      tags: [
-        {
-          path: assetsPath('js'),
-          glob: '*.dll.*.js',
-          globPath: dllRoot
-        }
-      ],
-      append: false
-    }),
-
-    ...fs.readdirSync(dllRoot).reduce(
-      (acc, nextFile) =>
-        [
-          ...acc,
-          /.*\.manifest.json$/.test(nextFile) &&
-          new webpack.DllReferencePlugin({
-            context: __dirname,
-            manifest: require(`${dllRoot}/${nextFile}`)
-          })
-        ].filter(Boolean),
-      []
-    )
+    new LodashWebpackPlugin()
   ]
 }

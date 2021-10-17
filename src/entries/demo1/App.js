@@ -16,13 +16,12 @@ export default class App extends Component {
     a: 1
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const o = {
       a: 1,
       b: 2,
       c: 3
     }
-    console.log(hhh)
     console.log(_.pick(o, ['a', 'b']))
   }
 
@@ -44,12 +43,13 @@ export default class App extends Component {
     console.log(hello)
   }
 
-  render() {
+  render () {
     console.log('render')
     console.log(this.state.a)
 
     return (
       <div className='app'>
+        <h1>hello123</h1>
         <Header />
         <Banner />
         <Content />

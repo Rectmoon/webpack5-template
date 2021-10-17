@@ -7,7 +7,7 @@
     "dev": "cross-env NODE_ENV=development webpack serve",
     "build": "cross-env NODE_ENV=production webpack",
     "build:watch": "npm run build --watch",
-    "dll": "webpack --config webpack/webpack.config.dll.js"
+    "preview": "node app.js"
   },
   "keywords": [],
   "author": "Rectmoon",
