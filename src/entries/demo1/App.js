@@ -49,7 +49,7 @@ export default class App extends Component {
 
     return (
       <div className='app'>
-        <h1>hello123</h1>
+        <h1>hello 123</h1>
         <Header />
         <Banner />
         <Content />

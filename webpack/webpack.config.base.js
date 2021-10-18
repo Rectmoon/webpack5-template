@@ -10,7 +10,6 @@ const { assetsSubDirectory, publicPath } = require('./config')
 
 const ENV = process.env.NODE_ENV
 const isDev = ENV === 'development'
-const dllRoot = resolve(`dll/${ENV}`)
 
 const globalCssHandlers = [
   isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
@@ -209,18 +208,6 @@ module.exports = {
           from: resolve('public'),
           to: assetsSubDirectory,
           force: true
-        }
-      ]
-    }),
-
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: dllRoot,
-          to: assetsPath('js'),
-          globOptions: {
-            ignore: ['.*', '*.manifest.json']
-          }
         }
       ]
     }),
