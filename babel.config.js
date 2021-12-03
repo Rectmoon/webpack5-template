@@ -18,7 +18,8 @@ module.exports = api => {
       ['lodash'],
       ['@babel/proposal-decorators', { legacy: true }],
       ['@babel/proposal-class-properties'],
-      process.env.NODE_ENV === 'development' && 'react-refresh/babel'
+      process.env.NODE_ENV === 'development' && 'react-refresh/babel',
+      process.env.NODE_ENV === 'development' && 'react-dev-inspector/plugins/babel'
     ].filter(Boolean)
   }
 }

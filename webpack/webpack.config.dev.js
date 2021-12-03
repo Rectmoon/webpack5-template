@@ -1,6 +1,7 @@
 const path = require('path')
 const { merge } = require('webpack-merge')
 const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+const { launchEditorMiddleware } = require('react-dev-inspector/plugins/webpack')
 
 const baseConfig = require('./webpack.config.base')
 const { publicPath } = require('./config')
@@ -10,13 +11,20 @@ module.exports = merge(baseConfig, {
 
   devtool: 'inline-source-map',
 
+  output: {
+    devtoolModuleFilenameTemplate: info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
+  },
+
   devServer: {
     hot: true,
     open: false,
     port: 9000,
     // quiet: true,  // 终端是否关闭打包日志
     // clientLogLevel: 'none', // 浏览器控制台是否输出编译相关日志
-    before (app) {
+    transportMode: 'ws',
+    before(app) {
+      app.use(launchEditorMiddleware)
+
       app.get('/api/profile', (req, res) => {
         res.json({
           name: 'zhangsan',
@@ -33,7 +41,7 @@ module.exports = merge(baseConfig, {
         target: 'http://localhost:3000',
         changeOrigin: true,
         pathRewrite: { '^/test': '' },
-        bypass (req) {
+        bypass(req) {
           req.headers.Cookies = 'x=1'
           req.headers.aaa = '666'
         }
@@ -70,7 +78,11 @@ module.exports = merge(baseConfig, {
 
   plugins: [
     new ReactRefreshPlugin({
-      overlay: false
+      overlay: {
+        entry: require.resolve('react-dev-utils/webpackHotDevClient'),
+        module: require.resolve('react-dev-utils/refreshOverlayInterop'),
+        sockIntegration: false,
+      },
     })
   ]
 })
